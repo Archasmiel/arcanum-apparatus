@@ -1,6 +1,7 @@
 package net.archasmiel.arcanumapparatus;
 
 import com.mojang.logging.LogUtils;
+import net.archasmiel.arcanumapparatus.items.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,7 +21,8 @@ public class ArcanumApparatus {
     public ArcanumApparatus() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the commonSetup method for modloading
+        ModItems.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
@@ -28,7 +30,7 @@ public class ArcanumApparatus {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("COMMON SETUP SUCCESSFUL");
+        LOGGER.info("commonSetup  successful");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -41,7 +43,7 @@ public class ArcanumApparatus {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            LOGGER.info("onClientSetup successful");
         }
 
     }

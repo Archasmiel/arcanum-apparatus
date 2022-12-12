@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.archasmiel.arcanumapparatus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "arcanumapparatus.mixin-refmap.json"
+}
