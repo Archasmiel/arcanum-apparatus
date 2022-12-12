@@ -1,5 +1,6 @@
 {
   "itemGroup.main_tab": "§9Arcanum Apparatus",
 
-  "item.arcanumapparatus.dull_ingot": "Dull Ingot"
+  "item.arcanumapparatus.dull_ingot": "Dull Ingot",
+  "block.arcanumapparatus.cobalt_ore": "Cobalt Ore"
 }

@@ -8,12 +8,10 @@ public class ModCreativeTab {
 
   public static final CreativeModeTab MOD_TAB =
       new CreativeModeTab("main_tab") {
-
         @Override
         public @NotNull ItemStack makeIcon() {
           return new ItemStack(ModItems.DULL_INGOT.get());
         }
-
       };
 
   private ModCreativeTab() {
