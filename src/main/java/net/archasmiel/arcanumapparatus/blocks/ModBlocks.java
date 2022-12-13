@@ -29,6 +29,38 @@ public class ModBlocks {
               .strength(3.0F, 3.0F)),
           ModCreativeTab.MOD_TAB);
 
+  public static final RegistryObject<Block> CHROME_ORE =
+      registerBlock("chrome_ore",
+          () -> new OreBlock(BlockBehaviour.Properties
+              .of(Material.STONE)
+              .requiresCorrectToolForDrops()
+              .strength(3.0F, 3.0F)),
+          ModCreativeTab.MOD_TAB);
+
+  public static final RegistryObject<Block> TUNGSTEN_ORE =
+      registerBlock("tungsten_ore",
+          () -> new OreBlock(BlockBehaviour.Properties
+              .of(Material.STONE)
+              .requiresCorrectToolForDrops()
+              .strength(3.0F, 3.0F)),
+          ModCreativeTab.MOD_TAB);
+
+  public static final RegistryObject<Block> VANADIUM_ORE =
+      registerBlock("vanadium_ore",
+          () -> new OreBlock(BlockBehaviour.Properties
+              .of(Material.STONE)
+              .requiresCorrectToolForDrops()
+              .strength(3.0F, 3.0F)),
+          ModCreativeTab.MOD_TAB);
+
+  public static final RegistryObject<Block> ZINC_ORE =
+      registerBlock("zinc_ore",
+          () -> new OreBlock(BlockBehaviour.Properties
+              .of(Material.STONE)
+              .requiresCorrectToolForDrops()
+              .strength(3.0F, 3.0F)),
+          ModCreativeTab.MOD_TAB);
+
   private ModBlocks() {
 
   }
