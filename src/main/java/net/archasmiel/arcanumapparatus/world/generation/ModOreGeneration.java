@@ -18,6 +18,10 @@ public class ModOreGeneration {
         event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES);
 
     undergroundOres.add(ModPlacedFeatures.COBALT_ORE_PLACED);
+    undergroundOres.add(ModPlacedFeatures.CHROME_ORE_PLACED);
+    undergroundOres.add(ModPlacedFeatures.TUNGSTEN_ORE_PLACED);
+    undergroundOres.add(ModPlacedFeatures.VANADIUM_ORE_PLACED);
+    undergroundOres.add(ModPlacedFeatures.ZINC_ORE_PLACED);
   }
 
 }
