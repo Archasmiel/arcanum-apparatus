@@ -1,7 +1,8 @@
 package net.archasmiel.arcanumapparatus.datagen.providers;
 
-import net.archasmiel.arcanumapparatus.ArcanumApparatus;
-import net.archasmiel.arcanumapparatus.blocks.ModBlocks;
+import static net.archasmiel.arcanumapparatus.ArcanumApparatus.MOD_ID;
+import static net.archasmiel.arcanumapparatus.block.ModBlocks.*;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -11,18 +12,17 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockModelProvider extends BlockModelProvider {
 
-  public ModBlockModelProvider(DataGenerator generator,
-      ExistingFileHelper existingFileHelper) {
-    super(generator, ArcanumApparatus.MOD_ID, existingFileHelper);
+  public ModBlockModelProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
+    super(dataGenerator, MOD_ID, existingFileHelper);
   }
 
   @Override
   protected void registerModels() {
-    simpleBlock(ModBlocks.CHROME_ORE.get());
-    simpleBlock(ModBlocks.COBALT_ORE.get());
-    simpleBlock(ModBlocks.TUNGSTEN_ORE.get());
-    simpleBlock(ModBlocks.VANADIUM_ORE.get());
-    simpleBlock(ModBlocks.ZINC_ORE.get());
+    simpleBlock(CHROME_ORE.get());
+    simpleBlock(COBALT_ORE.get());
+    simpleBlock(TUNGSTEN_ORE.get());
+    simpleBlock(VANADIUM_ORE.get());
+    simpleBlock(ZINC_ORE.get());
   }
 
   private BlockModelBuilder simpleBlock(Block block) {
@@ -32,7 +32,7 @@ public class ModBlockModelProvider extends BlockModelProvider {
     }
     return withExistingParent(registryName.getPath(),
         new ResourceLocation("block/cube_all"))
-        .texture("all", "block/" + registryName.getPath());
+          .texture("all", "block/" + registryName.getPath());
   }
 
 }

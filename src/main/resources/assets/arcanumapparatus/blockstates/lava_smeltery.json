@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "arcanumapparatus:block/lava_smeltery_lower"
+    },
+    "half=upper": {
+      "model": "arcanumapparatus:block/lava_smeltery_upper"
+    }
+  }
+}

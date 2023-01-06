@@ -1,5 +1,6 @@
-package net.archasmiel.arcanumapparatus.items;
+package net.archasmiel.arcanumapparatus.util;
 
+import net.archasmiel.arcanumapparatus.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;

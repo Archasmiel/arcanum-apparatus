@@ -2,9 +2,12 @@
   "itemGroup.main_tab": "Arcanum Apparatus",
 
   "item.arcanumapparatus.dull_ingot": "Пустой слиток",
+
   "block.arcanumapparatus.chrome_ore": "Хромовая руда",
   "block.arcanumapparatus.cobalt_ore": "Кобальтовая руда",
   "block.arcanumapparatus.tungsten_ore": "Вольфрамовая руда",
   "block.arcanumapparatus.vanadium_ore": "Ванадиевая руда",
-  "block.arcanumapparatus.zinc_ore": "Цинковая руда"
+  "block.arcanumapparatus.zinc_ore": "Цинковая руда",
+
+  "block.arcanumapparatus.lava_smeltery": "Лавовая плавильня"
 }

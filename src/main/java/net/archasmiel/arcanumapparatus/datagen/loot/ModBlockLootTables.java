@@ -1,6 +1,7 @@
 package net.archasmiel.arcanumapparatus.datagen.loot;
 
-import net.archasmiel.arcanumapparatus.blocks.ModBlocks;
+import net.archasmiel.arcanumapparatus.block.ModBlocks;
+import net.archasmiel.arcanumapparatus.util.registering.BlockRegistering;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
@@ -10,6 +11,8 @@ public class ModBlockLootTables extends BlockLoot {
 
   @Override
   protected void addTables() {
+    this.dropSelf(ModBlocks.LAVA_SMELTERY.get());
+
     this.dropSelf(ModBlocks.CHROME_ORE.get());
     this.dropSelf(ModBlocks.COBALT_ORE.get());
     this.dropSelf(ModBlocks.TUNGSTEN_ORE.get());
@@ -19,7 +22,7 @@ public class ModBlockLootTables extends BlockLoot {
 
   @Override
   protected @NotNull Iterable<Block> getKnownBlocks() {
-    return ModBlocks.BLOCKS.getEntries().stream()
+    return BlockRegistering.getRegister().getEntries().stream()
         .map(RegistryObject::get)::iterator;
   }
 

@@ -2,9 +2,12 @@
   "itemGroup.main_tab": "Arcanum Apparatus",
 
   "item.arcanumapparatus.dull_ingot": "Dull Ingot",
+
   "block.arcanumapparatus.chrome_ore": "Chrome Ore",
   "block.arcanumapparatus.cobalt_ore": "Cobalt Ore",
   "block.arcanumapparatus.tungsten_ore": "Tungsten Ore",
   "block.arcanumapparatus.vanadium_ore": "Vanadium Ore",
-  "block.arcanumapparatus.zinc_ore": "Zinc Ore"
+  "block.arcanumapparatus.zinc_ore": "Zinc Ore",
+
+  "block.arcanumapparatus.lava_smeltery": "Lava Smeltery"
 }

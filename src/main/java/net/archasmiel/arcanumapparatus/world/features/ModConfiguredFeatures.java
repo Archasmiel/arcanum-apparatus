@@ -2,7 +2,7 @@ package net.archasmiel.arcanumapparatus.world.features;
 
 import com.mojang.datafixers.util.Pair;
 import java.util.List;
-import net.archasmiel.arcanumapparatus.blocks.ModBlocks;
+import net.archasmiel.arcanumapparatus.block.ModBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;

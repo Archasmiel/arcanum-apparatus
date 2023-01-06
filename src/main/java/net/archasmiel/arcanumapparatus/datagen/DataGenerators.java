@@ -24,7 +24,6 @@ public class DataGenerators {
     generator.addProvider(new ModBlockModelProvider(generator, existingFileHelper));
     generator.addProvider(new ModItemModelProvider(generator, existingFileHelper));
     generator.addProvider(new ModBlockStateProvider(generator, existingFileHelper));
-
   }
 
   private DataGenerators() {
