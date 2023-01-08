@@ -2,11 +2,9 @@ package net.archasmiel.arcanumapparatus.blockentity;
 
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import net.archasmiel.arcanumapparatus.screen.LavaSmelteryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
 
   private static final String INVENTORY_TAG = "inventory";
+  private static final int SMELT_TIME = 80;
   private static final HashSet<Item> SMELTABLE_ITEMS = Sets.newHashSet(
       Items.COPPER_INGOT,
       Items.IRON_INGOT,
@@ -45,29 +44,23 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
   );
 
   private final ItemStackHandler itemHandler = new ItemStackHandler(16) {
-
     @Override
     protected void onContentsChanged(int slot) {
       setChanged();
     }
-
   };
 
   private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-
   protected final ContainerData data;
   private final List<Integer> progress = new ArrayList<>(Collections.nCopies(16, -1));
-  private final int smeltTime = 80;
+
 
   public LavaSmelteryBE(BlockPos pPos, BlockState pBlockState) {
     super(ModBlockEntities.LAVA_SMELTERY_BE.get(), pPos, pBlockState);
     this.data = new ContainerData() {
       @Override
       public int get(int pIndex) {
-        if (pIndex >= 0 && pIndex < 16) {
-          return LavaSmelteryBE.this.progress.get(pIndex);
-        }
-        return smeltTime;
+        return LavaSmelteryBE.this.progress.get(pIndex);
       }
 
       @Override
@@ -145,50 +138,43 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
   }
 
   public int smeltingTime() {
-    return smeltTime;
+    return SMELT_TIME;
   }
 
   public List<Integer> getProgress() {
     return progress;
   }
 
-  private Set<Integer> getSmeltableSlots() {
-    Set<Integer> slots = new HashSet<>();
-    for (int i = 0 ; i < 16 ; i++) {
-      ItemStack stack = itemHandler.getStackInSlot(i);
-      if (!stack.isEmpty() && SMELTABLE_ITEMS.contains(stack.getItem())) {
-        slots.add(i);
-      }
-    }
-    return slots;
-  }
-
   /**
    * Method for all slots updating.
    */
-  private void updateSlots(Level level, BlockPos blockPos, BlockState blockState,
-      Set<Integer> smeltableSlots) {
-    for (int i: smeltableSlots) {
+  private void updateSlots(Level level, BlockPos blockPos, BlockState blockState) {
+    for (int i = 0 ; i < 16 ; i++) {
       int slotProgress = progress.get(i);
       ItemStack stack = itemHandler.getStackInSlot(i).copy();
 
       // if stack in slot is empty (and slot progress is -1)
       if (stack.isEmpty() && slotProgress != -1) {
         progress.set(i, -1);
-      } else
+        setChanged(level, blockPos, blockState);
+        continue;
+      }
 
       // if slot progress is not -1
       if (slotProgress >= 0) {
-        if (slotProgress == smeltTime) {
+        if (slotProgress == SMELT_TIME) {
           slotSmelted(i, stack);
         } else {
           progress.set(i, slotProgress + 1);
         }
-      } else
+        setChanged(level, blockPos, blockState);
+        continue;
+      }
 
       // if item is smeltable and its progress is -1
       if (SMELTABLE_ITEMS.contains(stack.getItem())) {
         progress.set(i, 0);
+        setChanged(level, blockPos, blockState);
       }
     }
   }
@@ -213,11 +199,7 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
       return;
     }
 
-    Set<Integer> smeltableSlots = entity.getSmeltableSlots();
-    if (!smeltableSlots.isEmpty()) {
-      entity.updateSlots(level, blockPos, blockState, smeltableSlots);
-      setChanged(level, blockPos, blockState);
-    }
+    entity.updateSlots(level, blockPos, blockState);
   }
 
 }

@@ -1,6 +1,5 @@
 package net.archasmiel.arcanumapparatus.screen;
 
-import net.archasmiel.arcanumapparatus.block.ModBlocks;
 import net.archasmiel.arcanumapparatus.blockentity.LavaSmelteryBE;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,7 +8,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class LavaSmelteryMenu extends AbstractContainerMenu {
 
@@ -50,7 +49,17 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
     this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
       for (int r = 0 ; r < 4 ; r++) {
         for (int c = 0 ; c < 4 ; c++) {
-          this.addSlot(new SlotItemHandler(handler, c + r*4, 144 + c * 18, 7 + r * 18));
+          this.addSlot(new SlotItemHandler(handler, c + r*4, 144 + c * 18, 7 + r * 18) {
+            @Override
+            public int getMaxStackSize() {
+              return 1;
+            }
+
+            @Override
+            public int getMaxStackSize(@NotNull ItemStack stack) {
+              return 1;
+            }
+          });
         }
       }
     });
