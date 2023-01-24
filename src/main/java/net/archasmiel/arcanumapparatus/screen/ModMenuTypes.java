@@ -1,6 +1,7 @@
 package net.archasmiel.arcanumapparatus.screen;
 
 import net.archasmiel.arcanumapparatus.ArcanumApparatus;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;

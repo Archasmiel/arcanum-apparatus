@@ -1,38 +1,43 @@
-package net.archasmiel.arcanumapparatus.screen;
+package net.archasmiel.arcanumapparatus.screen.lavasmeltery;
 
-import net.archasmiel.arcanumapparatus.blockentity.LavaSmelteryBE;
+import lombok.Getter;
+import net.archasmiel.arcanumapparatus.block.ModBlocks;
+import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
+import net.archasmiel.arcanumapparatus.screen.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.NotNull;
 
 public class LavaSmelteryMenu extends AbstractContainerMenu {
 
+  @Getter
   public final LavaSmelteryBE blockEntity;
+  private final ContainerData itemData;
   private final Level level;
-  private final ContainerData data;
 
   public LavaSmelteryMenu(int id, Inventory inventory, FriendlyByteBuf extraData) {
-    this(id, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(16));
+    this(id, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()),
+        new SimpleContainerData(17));
   }
 
-  public LavaSmelteryMenu(int id, Inventory inventory, BlockEntity entity, ContainerData data) {
+  public LavaSmelteryMenu(int id, Inventory inventory, BlockEntity entity,
+      ContainerData itemData) {
     super(ModMenuTypes.LAVA_SMELTERY_MENU.get(), id);
     checkContainerSize(inventory, 16);
     blockEntity = (LavaSmelteryBE) entity;
     this.level = inventory.player.level;
-    this.data = data;
+    this.itemData = itemData;
 
     // inventory
     for (int r = 0 ; r < 3 ; r++) {
@@ -46,33 +51,26 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
       this.addSlot(new Slot(inventory, c, 36 + c * 18, 195));
     }
 
+    // block slots
     this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
       for (int r = 0 ; r < 4 ; r++) {
         for (int c = 0 ; c < 4 ; c++) {
-          this.addSlot(new SlotItemHandler(handler, c + r*4, 144 + c * 18, 7 + r * 18) {
-            @Override
-            public int getMaxStackSize() {
-              return 1;
-            }
-
-            @Override
-            public int getMaxStackSize(@NotNull ItemStack stack) {
-              return 1;
-            }
-          });
+          this.addSlot(new SmelteryItemSlot(handler, c + r*4, 144 + c * 18, 7 + r * 18));
         }
       }
+      this.addSlot(new SmelteryFuelSlot(handler, 16, 198, 97));
     });
 
-    addDataSlots(data);
+    addDataSlots(itemData);
   }
 
-  public boolean isSmeltingSlot(int slot) {
-    return data.get(slot) >= 0;
+  public float getLavaLevel() {
+    return 1f * blockEntity.getFuel().getFluidAmount() / LavaSmelteryBE.MAX_FUEL_LEVEL;
   }
 
   public float getScaledProgress(int slot) {
-    return 1f * data.get(slot) / blockEntity.smeltingTime();
+    int progress = itemData.get(slot);
+    return progress == -1 ? -1 : 1f * progress / LavaSmelteryBE.MAX_SMELT_TIME;
   }
 
   @Override
@@ -82,7 +80,7 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
     if (slot != null && slot.hasItem()) {
       ItemStack itemstack1 = slot.getItem();
       itemstack = itemstack1.copy();
-      EquipmentSlot equipmentslot = Mob.getEquipmentSlotForItem(itemstack);
+      EquipmentSlot equipmentslot = LivingEntity.getEquipmentSlotForItem(itemstack);
       if (pIndex == 0) {
         if (!this.moveItemStackTo(itemstack1, 9, 45, true)) {
           return ItemStack.EMPTY;
@@ -139,7 +137,8 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(Player pPlayer) {
-    return true;
+    return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+        pPlayer, ModBlocks.LAVA_SMELTERY.get());
   }
 
 }

@@ -2,10 +2,10 @@ package net.archasmiel.arcanumapparatus;
 
 import com.mojang.logging.LogUtils;
 import net.archasmiel.arcanumapparatus.block.ModBlocks;
-import net.archasmiel.arcanumapparatus.blockentity.ModBlockEntities;
+import net.archasmiel.arcanumapparatus.block.entity.ModBlockEntities;
 import net.archasmiel.arcanumapparatus.item.ModItems;
-import net.archasmiel.arcanumapparatus.screen.LavaSmelteryMenu;
-import net.archasmiel.arcanumapparatus.screen.LavaSmelteryScreen;
+import net.archasmiel.arcanumapparatus.networking.ModMessages;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryScreen;
 import net.archasmiel.arcanumapparatus.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -49,7 +49,7 @@ public class ArcanumApparatus {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("commonSetup successful");
+        ModMessages.register();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

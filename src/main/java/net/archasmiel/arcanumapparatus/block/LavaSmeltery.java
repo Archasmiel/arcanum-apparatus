@@ -1,7 +1,7 @@
 package net.archasmiel.arcanumapparatus.block;
 
-import net.archasmiel.arcanumapparatus.blockentity.LavaSmelteryBE;
-import net.archasmiel.arcanumapparatus.blockentity.ModBlockEntities;
+import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
+import net.archasmiel.arcanumapparatus.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -99,11 +99,13 @@ public class LavaSmeltery extends BaseEntityBlock {
       if (blockEntity instanceof LavaSmelteryBE smelteryBE) {
         NetworkHooks.openGui(((ServerPlayer)pPlayer), smelteryBE, pPos);
       } else {
-        throw new IllegalStateException("Block entity is wrong");
+        throw new IllegalStateException("Invalid block entity");
       }
+    } else {
+      return InteractionResult.SUCCESS;
     }
 
-    return InteractionResult.sidedSuccess(pLevel.isClientSide());
+    return InteractionResult.sidedSuccess(pPlayer.level.isClientSide);
   }
 
   @Nullable
@@ -113,4 +115,5 @@ public class LavaSmeltery extends BaseEntityBlock {
     return createTickerHelper(type, ModBlockEntities.LAVA_SMELTERY_BE.get(),
       LavaSmelteryBE::tick);
   }
+
 }

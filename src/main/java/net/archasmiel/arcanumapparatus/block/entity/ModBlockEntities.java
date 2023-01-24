@@ -1,4 +1,4 @@
-package net.archasmiel.arcanumapparatus.blockentity;
+package net.archasmiel.arcanumapparatus.block.entity;
 
 import net.archasmiel.arcanumapparatus.ArcanumApparatus;
 import net.archasmiel.arcanumapparatus.block.ModBlocks;
