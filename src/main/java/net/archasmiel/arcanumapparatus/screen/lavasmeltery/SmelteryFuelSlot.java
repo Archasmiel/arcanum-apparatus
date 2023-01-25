@@ -1,7 +1,7 @@
 package net.archasmiel.arcanumapparatus.screen.lavasmeltery;
 
+import net.archasmiel.arcanumapparatus.block.entity.SmelteryBE;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +24,7 @@ public class SmelteryFuelSlot extends SlotItemHandler {
 
   @Override
   public boolean mayPlace(@NotNull ItemStack stack) {
-    return stack.is(Items.LAVA_BUCKET);
+    return SmelteryBE.FUELS.stream().anyMatch(e -> e.getBucket() == stack.getItem());
   }
 
 }

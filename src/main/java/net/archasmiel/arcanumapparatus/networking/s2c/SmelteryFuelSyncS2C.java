@@ -1,8 +1,8 @@
 package net.archasmiel.arcanumapparatus.networking.s2c;
 
 import java.util.function.Supplier;
-import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
-import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryMenu;
+import net.archasmiel.arcanumapparatus.block.entity.SmelteryBE;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.SmelteryMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,10 +36,10 @@ public class SmelteryFuelSyncS2C {
         return;
       }
 
-      if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof LavaSmelteryBE blockEntity) {
+      if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof SmelteryBE blockEntity) {
         blockEntity.setFuelLevel(fluidStack);
 
-        if (Minecraft.getInstance().player.containerMenu instanceof LavaSmelteryMenu menu &&
+        if (Minecraft.getInstance().player.containerMenu instanceof SmelteryMenu menu &&
             menu.getBlockEntity().getBlockPos().equals(pos)) {
           // menu operations
         }

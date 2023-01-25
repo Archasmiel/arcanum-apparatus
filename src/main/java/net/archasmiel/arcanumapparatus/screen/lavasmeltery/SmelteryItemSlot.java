@@ -1,6 +1,6 @@
 package net.archasmiel.arcanumapparatus.screen.lavasmeltery;
 
-import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
+import net.archasmiel.arcanumapparatus.block.entity.SmelteryBE;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -24,7 +24,7 @@ public class SmelteryItemSlot extends SlotItemHandler {
 
   @Override
   public boolean mayPlace(@NotNull ItemStack stack) {
-    return LavaSmelteryBE.SMELTABLE_ITEMS.contains(stack.getItem());
+    return SmelteryBE.SMELTABLE_ITEMS.contains(stack.getItem());
   }
 
 }

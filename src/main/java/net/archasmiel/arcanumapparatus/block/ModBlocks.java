@@ -14,8 +14,8 @@ public class ModBlocks {
   public static final RegistryObject<Block> VANADIUM_ORE = BlockRegistering.registerOre("vanadium");
   public static final RegistryObject<Block> ZINC_ORE = BlockRegistering.registerOre("zinc");
 
-  public static final RegistryObject<Block> LAVA_SMELTERY = BlockRegistering.registerBlock(
-      "lava_smeltery", () -> new LavaSmeltery(new BlockPropertiesBuilder()
+  public static final RegistryObject<Block> SMELTERY = BlockRegistering.registerBlock(
+      "smeltery", () -> new Smeltery(new BlockPropertiesBuilder()
           .metal().needTools().resists(3, 3).build()));
 
   private ModBlocks() {

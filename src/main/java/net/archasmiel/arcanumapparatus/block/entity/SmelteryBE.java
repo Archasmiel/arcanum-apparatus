@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import net.archasmiel.arcanumapparatus.networking.ModMessages;
 import net.archasmiel.arcanumapparatus.networking.s2c.SmelteryFuelSyncS2C;
-import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryMenu;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.SmelteryMenu;
 import net.archasmiel.arcanumapparatus.util.smeltery.FuelFluid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,10 +42,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
+public class SmelteryBE extends BlockEntity implements MenuProvider {
 
-  /* TESTING SUBJECTS
-  * TODO delete later */
+  /* ONLY TESTING SUBJECTS
+  * TODO delete later
+  * TODO replace with JSON recipes */
   public static final Set<Item> SMELTABLE_ITEMS = Sets.newHashSet(
       Items.COPPER_INGOT,
       Items.IRON_INGOT,
@@ -54,14 +55,15 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
   public static final Set<FuelFluid> FUELS = Sets.newHashSet(
       new FuelFluid(Items.LAVA_BUCKET, Fluids.LAVA)
   );
+  public static final int SMELTING_TIME = 80;
+  public static final int LAVA_PER_OPERATION = 32;
 
   public static final String INVENTORY_TAG = "inventory";
-  public static final String LAVA_TAG = "lava_level";
-  public static final int MAX_SMELT_TIME = 80;
-  public static final int LAVA_PER_OPERATION = 32;
-  public static final int MAX_FUEL_LEVEL = 18000;
+  public static final String LAVA_TAG = "fuel";
+  public static final int FUEL_CAPACITY = 8000;
 
-  private final FluidTank fuelTank = new FluidTank(18000) {
+  private final FluidTank fuelTank = new FluidTank(FUEL_CAPACITY) {
+
     @Override
     protected void onContentsChanged() {
       setChanged();
@@ -74,9 +76,11 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
     public boolean isFluidValid(FluidStack stack) {
       return FUELS.stream().anyMatch(e -> e.getFluid() == stack.getFluid());
     }
+
   };
 
   private final ItemStackHandler itemHandler = new ItemStackHandler(17) {
+
     @Override
     protected void onContentsChanged(int slot) {
       setChanged();
@@ -89,25 +93,26 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
       }
       return slot == 16 && FUELS.stream().anyMatch(e -> e.getBucket() == stack.getItem());
     }
+
   };
 
   private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
   private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
-  protected final ContainerData itemData;
+  protected final ContainerData progressData;
   private final List<Integer> smeltProgress = new ArrayList<>(Collections.nCopies(16, -1));
 
 
-  public LavaSmelteryBE(BlockPos pPos, BlockState pBlockState) {
+  public SmelteryBE(BlockPos pPos, BlockState pBlockState) {
     super(ModBlockEntities.LAVA_SMELTERY_BE.get(), pPos, pBlockState);
-    this.itemData = new ContainerData() {
+    this.progressData = new ContainerData() {
       @Override
       public int get(int pIndex) {
-        return LavaSmelteryBE.this.smeltProgress.get(pIndex);
+        return SmelteryBE.this.smeltProgress.get(pIndex);
       }
 
       @Override
       public void set(int pIndex, int pValue) {
-        LavaSmelteryBE.this.smeltProgress.set(pIndex, pValue);
+        SmelteryBE.this.smeltProgress.set(pIndex, pValue);
       }
 
       @Override
@@ -125,7 +130,7 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
   @Override
   public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
     ModMessages.sendToClients(new SmelteryFuelSyncS2C(this.fuelTank.getFluid(), worldPosition));
-    return new LavaSmelteryMenu(pContainerId, pPlayerInventory, this, itemData);
+    return new SmelteryMenu(pContainerId, pPlayerInventory, this, progressData);
   }
 
   @NotNull
@@ -204,7 +209,7 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
         if (stack.isEmpty()) {
           smeltProgress.set(i, -1);
         } else {
-          if (slotProgress == MAX_SMELT_TIME) {
+          if (slotProgress == SMELTING_TIME) {
             itemHandler.setStackInSlot(i, ItemStack.EMPTY);
             smeltProgress.set(i, -1);
           } else {
@@ -225,7 +230,7 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
         .findFirst();
 
     fuelFluid.ifPresent(e -> {
-      if (MAX_FUEL_LEVEL - fuelTank.getFluidAmount() >= 1000) {
+      if (FUEL_CAPACITY - fuelTank.getFluidAmount() >= 1000) {
         itemHandler.setStackInSlot(16, new ItemStack(Items.BUCKET));
         fuelTank.fill(new FluidStack(e.getFluid(), 1000), FluidAction.EXECUTE);
       }
@@ -233,7 +238,7 @@ public class LavaSmelteryBE extends BlockEntity implements MenuProvider {
   }
 
   public static void tick(Level level, BlockPos blockPos, BlockState blockState,
-      LavaSmelteryBE entity) {
+      SmelteryBE entity) {
     if (level.isClientSide()) {
       return;
     }

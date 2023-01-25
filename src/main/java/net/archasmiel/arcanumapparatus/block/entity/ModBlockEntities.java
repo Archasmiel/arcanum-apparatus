@@ -13,9 +13,9 @@ public class ModBlockEntities {
   public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
       DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ArcanumApparatus.MOD_ID);
 
-  public static final RegistryObject<BlockEntityType<LavaSmelteryBE>> LAVA_SMELTERY_BE =
-      BLOCK_ENTITIES.register("lava_smeltery", () ->
-          BlockEntityType.Builder.of(LavaSmelteryBE::new, ModBlocks.LAVA_SMELTERY.get())
+  public static final RegistryObject<BlockEntityType<SmelteryBE>> LAVA_SMELTERY_BE =
+      BLOCK_ENTITIES.register("smeltery", () ->
+          BlockEntityType.Builder.of(SmelteryBE::new, ModBlocks.SMELTERY.get())
               .build(null));
 
   private ModBlockEntities() {

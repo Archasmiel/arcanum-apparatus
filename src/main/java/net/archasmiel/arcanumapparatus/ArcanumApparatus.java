@@ -5,7 +5,7 @@ import net.archasmiel.arcanumapparatus.block.ModBlocks;
 import net.archasmiel.arcanumapparatus.block.entity.ModBlockEntities;
 import net.archasmiel.arcanumapparatus.item.ModItems;
 import net.archasmiel.arcanumapparatus.networking.ModMessages;
-import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryScreen;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.SmelteryScreen;
 import net.archasmiel.arcanumapparatus.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -43,9 +43,9 @@ public class ArcanumApparatus {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAVA_SMELTERY.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SMELTERY.get(), RenderType.translucent());
 
-        MenuScreens.register(ModMenuTypes.LAVA_SMELTERY_MENU.get(), LavaSmelteryScreen::new);
+        MenuScreens.register(ModMenuTypes.LAVA_SMELTERY_MENU.get(), SmelteryScreen::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

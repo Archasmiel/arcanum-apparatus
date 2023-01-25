@@ -2,8 +2,9 @@ package net.archasmiel.arcanumapparatus.screen.lavasmeltery;
 
 import lombok.Getter;
 import net.archasmiel.arcanumapparatus.block.ModBlocks;
-import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
+import net.archasmiel.arcanumapparatus.block.entity.SmelteryBE;
 import net.archasmiel.arcanumapparatus.screen.ModMenuTypes;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,25 +20,25 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class LavaSmelteryMenu extends AbstractContainerMenu {
+public class SmelteryMenu extends AbstractContainerMenu {
 
   @Getter
-  public final LavaSmelteryBE blockEntity;
-  private final ContainerData itemData;
+  public final SmelteryBE blockEntity;
+  private final ContainerData progressData;
   private final Level level;
 
-  public LavaSmelteryMenu(int id, Inventory inventory, FriendlyByteBuf extraData) {
+  public SmelteryMenu(int id, Inventory inventory, FriendlyByteBuf extraData) {
     this(id, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()),
         new SimpleContainerData(17));
   }
 
-  public LavaSmelteryMenu(int id, Inventory inventory, BlockEntity entity,
-      ContainerData itemData) {
+  public SmelteryMenu(int id, Inventory inventory, BlockEntity entity,
+      ContainerData progressData) {
     super(ModMenuTypes.LAVA_SMELTERY_MENU.get(), id);
     checkContainerSize(inventory, 16);
-    blockEntity = (LavaSmelteryBE) entity;
+    blockEntity = (SmelteryBE) entity;
     this.level = inventory.player.level;
-    this.itemData = itemData;
+    this.progressData = progressData;
 
     // inventory
     for (int r = 0 ; r < 3 ; r++) {
@@ -61,19 +62,20 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
       this.addSlot(new SmelteryFuelSlot(handler, 16, 198, 97));
     });
 
-    addDataSlots(itemData);
+    addDataSlots(progressData);
   }
 
-  public float getLavaLevel() {
-    return 1f * blockEntity.getFuel().getFluidAmount() / LavaSmelteryBE.MAX_FUEL_LEVEL;
+  public float getFuelScaled() {
+    return 1f * blockEntity.getFuel().getFluidAmount() / SmelteryBE.FUEL_CAPACITY;
   }
 
-  public float getScaledProgress(int slot) {
-    int progress = itemData.get(slot);
-    return progress == -1 ? -1 : 1f * progress / LavaSmelteryBE.MAX_SMELT_TIME;
+  public float getProgressScaled(int slot) {
+    int progress = progressData.get(slot);
+    return progress == -1 ? -1 : 1f * progress / SmelteryBE.SMELTING_TIME;
   }
 
   @Override
+  @MethodsReturnNonnullByDefault
   public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = this.slots.get(pIndex);
@@ -138,7 +140,7 @@ public class LavaSmelteryMenu extends AbstractContainerMenu {
   @Override
   public boolean stillValid(Player pPlayer) {
     return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-        pPlayer, ModBlocks.LAVA_SMELTERY.get());
+        pPlayer, ModBlocks.SMELTERY.get());
   }
 
 }

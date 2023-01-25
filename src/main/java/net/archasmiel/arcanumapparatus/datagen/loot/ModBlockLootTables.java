@@ -11,7 +11,7 @@ public class ModBlockLootTables extends BlockLoot {
 
   @Override
   protected void addTables() {
-    this.dropSelf(ModBlocks.LAVA_SMELTERY.get());
+    this.dropSelf(ModBlocks.SMELTERY.get());
 
     this.dropSelf(ModBlocks.CHROME_ORE.get());
     this.dropSelf(ModBlocks.COBALT_ORE.get());

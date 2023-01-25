@@ -74,7 +74,7 @@ minecraft {
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', 'arcanumapparatus'
-            arg "-mixin.config=arcanumapparatus.mixin.json"
+            arg '-mixin.config=arcanumapparatus.mixin.json'
 
             mods {
                 arcanumapparatus {
@@ -183,11 +183,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "arcanumapparatus",
-                "Specification-Vendor"    : "arcanumapparatussareus",
+                "Specification-Vendor"    : "Archasmiel",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "arcanumapparatussareus",
+                "Implementation-Vendor"   : "Archasmiel",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "TweakOrder": 0,

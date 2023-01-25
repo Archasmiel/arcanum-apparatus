@@ -2,7 +2,7 @@ package net.archasmiel.arcanumapparatus.datagen.providers;
 
 import static net.archasmiel.arcanumapparatus.block.ModBlocks.CHROME_ORE;
 import static net.archasmiel.arcanumapparatus.block.ModBlocks.COBALT_ORE;
-import static net.archasmiel.arcanumapparatus.block.ModBlocks.LAVA_SMELTERY;
+import static net.archasmiel.arcanumapparatus.block.ModBlocks.SMELTERY;
 import static net.archasmiel.arcanumapparatus.block.ModBlocks.TUNGSTEN_ORE;
 import static net.archasmiel.arcanumapparatus.block.ModBlocks.VANADIUM_ORE;
 import static net.archasmiel.arcanumapparatus.block.ModBlocks.ZINC_ORE;
@@ -33,7 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     simpleBlockItem(VANADIUM_ORE.get());
     simpleBlockItem(ZINC_ORE.get());
 
-    simpleBlockItem(LAVA_SMELTERY.get());
+    simpleBlockItem(SMELTERY.get());
   }
 
 

@@ -1,7 +1,7 @@
 package net.archasmiel.arcanumapparatus.screen;
 
 import net.archasmiel.arcanumapparatus.ArcanumApparatus;
-import net.archasmiel.arcanumapparatus.screen.lavasmeltery.LavaSmelteryMenu;
+import net.archasmiel.arcanumapparatus.screen.lavasmeltery.SmelteryMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -16,8 +16,8 @@ public class ModMenuTypes {
   public static final DeferredRegister<MenuType<?>> MENUS =
       DeferredRegister.create(ForgeRegistries.CONTAINERS, ArcanumApparatus.MOD_ID);
 
-  public static final RegistryObject<MenuType<LavaSmelteryMenu>> LAVA_SMELTERY_MENU =
-      registerMenuType(LavaSmelteryMenu::new, "lava_smeltery_menu");
+  public static final RegistryObject<MenuType<SmelteryMenu>> LAVA_SMELTERY_MENU =
+      registerMenuType(SmelteryMenu::new, "smeltery_menu");
 
   private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(
       IContainerFactory<T> factory, String name) {

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "arcanumapparatus:block/lava_smeltery",
-		"particle": "arcanumapparatus:block/lava_smeltery"
+		"0": "arcanumapparatus:block/smeltery",
+		"particle": "arcanumapparatus:block/smeltery"
 	},
 	"elements": [
 		{

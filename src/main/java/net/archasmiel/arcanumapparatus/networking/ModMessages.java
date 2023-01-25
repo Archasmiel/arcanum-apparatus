@@ -1,7 +1,8 @@
 package net.archasmiel.arcanumapparatus.networking;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.archasmiel.arcanumapparatus.ArcanumApparatus;
-import net.archasmiel.arcanumapparatus.networking.c2s.SlotUpdatePacket;
 import net.archasmiel.arcanumapparatus.networking.s2c.SmelteryFuelSyncS2C;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,6 +15,10 @@ public class ModMessages {
 
   public static final ResourceLocation RESOURCE =
       new ResourceLocation(ArcanumApparatus.MOD_ID, "messages");
+  public static final Supplier<String> PROTOCOL_VERSION = () -> "1.0";
+  public static final Predicate<String> SERVER_VERSION = s -> true;
+  public static final Predicate<String> CLIENT_VERSION = s -> true;
+
   private static SimpleChannel instance;
 
   private static int packetId = 0;
@@ -29,9 +34,9 @@ public class ModMessages {
   public static void register() {
     instance = NetworkRegistry.ChannelBuilder
         .named(RESOURCE)
-        .networkProtocolVersion(() -> "1.0")
-        .serverAcceptedVersions(s -> true)
-        .clientAcceptedVersions(s -> true)
+        .networkProtocolVersion(PROTOCOL_VERSION)
+        .serverAcceptedVersions(SERVER_VERSION)
+        .clientAcceptedVersions(CLIENT_VERSION)
         .simpleChannel();
 
     instance.messageBuilder(SmelteryFuelSyncS2C.class, id(), NetworkDirection.PLAY_TO_CLIENT)

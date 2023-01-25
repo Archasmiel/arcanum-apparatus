@@ -1,6 +1,6 @@
 package net.archasmiel.arcanumapparatus.block;
 
-import net.archasmiel.arcanumapparatus.block.entity.LavaSmelteryBE;
+import net.archasmiel.arcanumapparatus.block.entity.SmelteryBE;
 import net.archasmiel.arcanumapparatus.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,11 +30,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class LavaSmeltery extends BaseEntityBlock {
+public class Smeltery extends BaseEntityBlock {
 
   public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-  public LavaSmeltery(Properties pProperties) {
+  public Smeltery(Properties pProperties) {
     super(pProperties);
   }
 
@@ -69,7 +69,7 @@ public class LavaSmeltery extends BaseEntityBlock {
   @Nullable
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return new LavaSmelteryBE(pos, state);
+    return new SmelteryBE(pos, state);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class LavaSmeltery extends BaseEntityBlock {
   public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState,
       boolean pIsMoving) {
     BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-    if (blockEntity instanceof LavaSmelteryBE smelteryBE) {
+    if (blockEntity instanceof SmelteryBE smelteryBE) {
       smelteryBE.drops();
     }
     super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -96,7 +96,7 @@ public class LavaSmeltery extends BaseEntityBlock {
 
     if (!pLevel.isClientSide) {
       BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-      if (blockEntity instanceof LavaSmelteryBE smelteryBE) {
+      if (blockEntity instanceof SmelteryBE smelteryBE) {
         NetworkHooks.openGui(((ServerPlayer)pPlayer), smelteryBE, pPos);
       } else {
         throw new IllegalStateException("Invalid block entity");
@@ -113,7 +113,7 @@ public class LavaSmeltery extends BaseEntityBlock {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
       BlockEntityType<T> type) {
     return createTickerHelper(type, ModBlockEntities.LAVA_SMELTERY_BE.get(),
-      LavaSmelteryBE::tick);
+      SmelteryBE::tick);
   }
 
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "arcanumapparatus:block/smeltery_lower"
+    },
+    "half=upper": {
+      "model": "arcanumapparatus:block/smeltery_upper"
+    }
+  }
+}
